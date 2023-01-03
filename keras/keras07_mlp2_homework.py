@@ -35,5 +35,6 @@ result = model.predict([[10, 1.4, 0]])
 print('[10, 1.4, 0]의 예측값 : ', result)
 
 '''
-
+X가 3덩어리 = input_dim은 3이 된다.
+predict의 값도 바꿔준다. (10, 1.4, 0) 3가지를 써줌.
 '''
