@@ -41,7 +41,7 @@ model.add(Dense(50))
 model.add(Dense(70))
 model.add(Dense(1))
 
-# 결과 = 0.633
+# 결과 = R2 : 0.7094169688545373
 
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam',
