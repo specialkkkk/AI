@@ -112,5 +112,5 @@ print("RMSE : ", RMSE(y_test, y_predict))
 print("걸린시간 : ", end - start)
 
 
-dawekfjlewklfkjwaefljalwiejflwiejfl
+
 # 150.
