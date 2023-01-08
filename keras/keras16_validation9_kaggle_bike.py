@@ -41,9 +41,7 @@ model.add(Dense(1))
 
 #3. 컴파일 및 훈련
 model.compile(loss='mse', optimizer='adam')
-start = t.time()
 model.fit(x_train, y_train, epochs = 100, batch_size=10, validation_split=0.2)
-fin = t.time()
 
 
 
@@ -52,17 +50,16 @@ loss = model.evaluate(x_test, y_test)
 print('loss: ', loss)
 
 y_predict = model.predict(x_test)
-# print('x_test:\n', x_test)
-# print('y_predict:\n', y_predict)
+def RMSE(y_test, y_predict):
+    return np.sqrt(mean_squared_error(y_test, y_predict))
 
 RMSE = np.sqrt(mean_squared_error(y_test, y_predict))
 print("RMSE: ", RMSE)
-RMSLE = np.sqrt(mean_squared_log_error(y_test, y_predict))
-print("RMSLE: ", RMSLE)
+
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
 
-print("소요시간: ", fin - start)
+
 
 # 제출
 y_submit = model.predict(test_data)
