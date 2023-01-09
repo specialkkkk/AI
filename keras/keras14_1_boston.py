@@ -25,8 +25,8 @@ print(y)
 print(y.shape)    # (506,)
 
 print(dataset.feature_names)
-#'CRIM' 'ZN' 'INDUS' 'CHAS' 'NOX' 'RM' 'AGE' 'DIS' 'RAD' 'TAX' 'PTRATIO'
-# 'B' 'LSTAT' 이런 컬럼=열=피처가 13개가 있다는 뜻.
+#'CRIM' 'ZN' 'INDUS' 'CHAS' 'NOX' 'RM' 'AGE' 'DIS' 'RAD' 'TAX' 'PTRATIO' 'B' 'LSTAT'
+#  이런 컬럼=열=피처가 13개가 있다는 뜻.
 print(dataset.DESCR)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y,

@@ -46,6 +46,7 @@ print(y_train.shape, y_test.shape)   # (1021, )   (438,)
 #2. 모델구성
 model = Sequential()
 model.add(Dense(100, input_dim=9))
+model.add(Dense(50, input_shape=(9,)))
 model.add(Dense(80, activation='relu'))
 model.add(Dense(60, activation='relu'))
 model.add(Dense(70, activation='relu'))
@@ -57,13 +58,15 @@ model.add(Dense(30, activation='relu'))
 model.add(Dense(1))
 
 
+
 #3. 컴파일, 훈련
 import time
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 start= time.time()
-model.fit(x_train, y_train, epochs=200, batch_size=32,
+hist = model.fit(x_train, y_train, epochs=200, batch_size=32,
           validation_split=0.25)
 end = time.time()
+
 
 
 #4. 평가,예측
@@ -74,7 +77,9 @@ y_predict = model.predict(x_test)
 print(y_predict)
 
 
-def RMSE(y_test, y_predict):                                    
+
+
+def RMSE(y_test, y_predict):                                      # #predict : 예측값 y_test  y나눠진값.
     return np.sqrt(mean_squared_error(y_test, y_predict))
     
 print("RMSE:", RMSE(y_test, y_predict))
@@ -82,10 +87,15 @@ r2 = r2_score(y_test, y_predict)
 print("R2:", r2)
 
 
+
 #제출할 파일(submit)
 y_submit = model.predict(test_csv)
 print(y_submit)
 print(y_submit.shape)  # (715, 1)
+
+# .to_csv()를 사용해서
+# submission_0105.csv를 완성하시오! !
+
 
 submission['count'] = y_submit
 submission.to_csv(path + 'submission_01050253.csv')
@@ -96,5 +106,27 @@ print("RMSE : ", RMSE(y_test, y_predict))
 
 print("걸린시간 : ", end - start)
 
+print("=======================")
+print(hist) #<keras.callbacks.History object at 0x0000024787770D90>
+print("=======================")
+print(hist.history)
+print("=======================")
+print(hist.history['loss'])
+print("=======================")
+print(hist.history['val_loss'])
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(9,6))
+plt.plot(hist.history['loss'], c='red', marker='.', label='loss')
+plt.plot(hist.history['val_loss'], c='blue', marker='.', label='val_loss')
+plt.grid()
+plt.xlabel('epochs')
+plt.ylabel('loss')
+plt.title('boston loss')
+plt.legend()
+
+#plt.legend(loc='upper right')   = 오른쪽 위로 위치 지정
+
+plt.show()
 
 

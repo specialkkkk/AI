@@ -5,10 +5,8 @@ from sklearn.model_selection import train_test_split
 
 
 #1. 데이터
-x = np.array(range(1, 17))          # 1~ 16
+x = np.array(range(1, 17))          
 y = np.array(range(1, 17))
-
-
 
 
 x_train, x_test, y_train, y_test = train_test_split(
@@ -18,11 +16,8 @@ x_train, x_test, y_train, y_test = train_test_split(
     random_state=123
 )
 
-
 print(x_train.shape, x_test.shape) # (12,) (4,)
 print(y_train.shape, y_test.shape) # (12,) (4,)
-
-
 
 
 
