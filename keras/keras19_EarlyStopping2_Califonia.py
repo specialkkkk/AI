@@ -43,7 +43,7 @@ earlyStopping = EarlyStopping(monitor='val_loss' ,
                               patience=5, restore_best_weights=True,
                               verbose=1)
 
-hist = model.fit(x_train, y_train, epochs=100, batch_size=10,
+hist = model.fit(x_train, y_train, epochs=10, batch_size=10,
           validation_split=0.2, callbacks=[earlyStopping],
           verbose=1)
 
@@ -79,13 +79,16 @@ print("=======================")
 print(hist.history['val_loss'])
 
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.rcParams['font.family'] ='Malgun Gothic'
+matplotlib.rcParams['axes.unicode_minus'] =False
 plt.figure(figsize=(9,6))
 plt.plot(hist.history['loss'], c='red', marker='.', label='loss')
 plt.plot(hist.history['val_loss'], c='blue', marker='.', label='val_loss')
 plt.grid()
 plt.xlabel('epochs')
 plt.ylabel('loss')
-plt.title('califonia loss')
+plt.title('캘리포니아 손실')
 plt.legend()
 
 #plt.legend(loc='upper right')   = 오른쪽 위로 위치 지정

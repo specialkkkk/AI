@@ -87,6 +87,9 @@ print("=======================")
 print(hist.history['val_loss'])
 
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.rcParams['font.family'] ='Malgun Gothic'
+matplotlib.rcParams['axes.unicode_minus'] =False
 plt.figure(figsize=(9,6))
 plt.plot(hist.history['loss'], c='red', marker='.', label='loss')
 plt.plot(hist.history['val_loss'], c='blue', marker='.', label='val_loss')

@@ -76,9 +76,6 @@ from sklearn.metrics import accuracy_score
 
 
 
-
-
-
                  
 
 
@@ -102,4 +99,10 @@ y_predict = np.where(y_predict > 0.5, 1 , 0)
 
 # preds_1d = y_predict.flatten() # 차원 펴주기
 # pred_class = np.where(preds_1d > 0.5, 2 , 1) #0.5보다크면 2, 작으면 1
+
+
+<정수로 바꾸기3>
+round
  '''
+ 
+ 
