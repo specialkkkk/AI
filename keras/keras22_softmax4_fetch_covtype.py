@@ -12,9 +12,6 @@ print(x.shape, y.shape)  # (581012, 54) (581012,)    #데이터 58만개  / 컬�
 print(np.unique(y, return_counts=True))  #(array([1, 2, 3, 4, 5, 6, 7]), array([211840, 283301,  35754,   2747,   9493,  17367,  20510], dtype=int64)) output= 7
 
 
-
-
-
 from tensorflow.keras.utils import to_categorical
 y = to_categorical(y)
 print(y)
@@ -22,14 +19,60 @@ y = np.delete(y, 0 , axis = 1)
 print(y.shape)
 
 
-
-
-
 x_train, x_test, y_train, y_test = train_test_split(x, y, shuffle=True, random_state=333, test_size=0.2,
                                                     stratify=y)
 print(y_train)
 print(y_test)
 
+
+######################################## 케라스 투카테고리컬##############################
+# from tensorflow.kears.utils import to_categorical
+# y = to_categorical(y)
+# print(y.shape)   #  (581012, 8)
+#print(type(y))      <class 'numpy.ndarray'>
+#print(y[:10])
+#print(np.unique(y[:,0]), return_counts=True))            [0.]
+#print(np.unique(y[:,1]), return_counts=True))            [0, 1.]
+#y = np.delete(y, 0, axis=1)
+# print(shape.y) 
+# print(y[:10])
+#print(np.unique(y[:,0]), return_counts=True)
+#평가,예측~
+#########################################################################################
+
+######################################## 판다스 겟더미스 #################################
+# import pandas as pd
+# y = pd.get_dummies(y)
+# print(type(y[:10])
+# print(type(y))   # <class 'pandas.core.frame.Data
+
+# y = y.values     #  = 판다스 데이터 y가 넘파이로 바뀐다(넘파이로 바꿔야 인식됨)
+# y = y.to_numpy   #  = 판다스 데이터 y가 넘파이로 바뀐다(넘파이로 바꿔야 인식됨)
+
+# print(type(y))   # <class 'numpy.ndarray'>
+# print(y.shape)   #   (581012, 7)
+
+#########################################################################################
+
+######################################### 사이킷런 전처리 ###################################
+#  ★ 원핫인코더쓰고 toaraay로 바꿔준다. ★
+
+
+# print(y.shape) (581012,)
+# y = y.reshape(581012, 1)
+# print(y.shape) (581012, 1)             
+# from sklearn.preprocessing import OneHotEncoder
+# ohe = OneHotEncoder()
+# y = ohe.fit(y)                         
+# y = ohe.transform(y)        두줄을 한줄로 쓰기  # y = ohe.fit_transform
+# y = y.toarray()
+
+
+# print(y[:15])
+# print(type(y))  # <class 'scipy.sparse._csr.csr_matrix'>
+# print(y.shape)  # (581012, 7)
+
+#############################################################################################
 
 
 
