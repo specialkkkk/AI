@@ -19,8 +19,7 @@ y = np.delete(y, 0 , axis = 1)
 print(y.shape)
 
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, shuffle=True, random_state=333, test_size=0.2,
-                                                    stratify=y)
+x_train, x_test, y_train, y_test = train_test_split(x, y, shuffle=True, random_state=333, test_size=0.2) #stratify=y 제거
 print(y_train)
 print(y_test)
 
@@ -76,13 +75,28 @@ print(y_test)
 
 
 
+
+
+
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+scaler = MinMaxScaler()
+# scaler = StandardScaler()
+
+scaler.fit(x_train)
+x_train = scaler.transform(x_train)
+x_test = scaler.transform(x_test)
+
+
+
+
+
 #2. 모델구성
 model = Sequential()
-model.add(Dense(110, activation='relu', input_shape=(54,)))
-model.add(Dense(90, activation='relu'))
-model.add(Dense(60, activation='relu'))
-model.add(Dense(50, activation='relu'))
-model.add(Dense(30, activation='relu'))
+model.add(Dense(256, activation='relu', input_shape=(54,)))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(16, activation='relu'))
 model.add(Dense(7, activation='softmax'))            
 
 #3. 컴파일, 훈련
@@ -118,5 +132,7 @@ acc = accuracy_score(y_test, y_predict)
 print(acc)
 
 
-# loss :  0.27441132068634033
-# accuracy :  0.8889012932777405
+
+
+# accuracy :  0.860287606716156
+# accuracy :  0.9325060248374939  레이어 2의 배수 역삼각형
