@@ -21,16 +21,10 @@ y = onehot.transform(y.reshape(-1, 1)).toarray()
 print(y)
 
 
-
-
-
-
 x_train, x_test, y_train, y_test = train_test_split(x, y, shuffle=True, random_state=333, test_size=0.8,
                                                     stratify=y)
 print(y_train)
 print(y_test)
-
-
 
 
 

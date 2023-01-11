@@ -15,16 +15,11 @@ print(np.unique(y, return_counts=True))  #(array([1, 2, 3, 4, 5, 6, 7]), array([
 
 
 
-
 from tensorflow.keras.utils import to_categorical
 y = to_categorical(y)
 print(y)
-arr = np.delete(y, 0 , axis = 1)
+y = np.delete(y, 0 , axis = 1)
 print(y.shape)
-
-
-
-
 
 
 
@@ -37,7 +32,7 @@ print(y_test)
 
 
 
-'''
+
 #2. 모델구성
 model = Sequential()
 model.add(Dense(110, activation='relu', input_shape=(54,)))
@@ -55,7 +50,7 @@ earlyStopping = EarlyStopping(monitor='val_loss' ,
                               mode='min', 
                               patience=20, restore_best_weights=True,
                               verbose=1)
-model.fit(x_train, y_train, epochs=1000, batch_size=1,
+model.fit(x_train, y_train, epochs=100, batch_size=50,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
@@ -78,5 +73,3 @@ print("y_test(원래값) : ", y_test)
 
 acc = accuracy_score(y_test, y_predict)   
 print(acc)
-
-'''
