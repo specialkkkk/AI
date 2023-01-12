@@ -9,6 +9,15 @@ from sklearn.datasets import load_boston
 
 
 
+path = './_save/'
+# path = '../_save/'
+# path = 'c:/study/_save/'
+
+# model.save(path + 'keras29_3_save_model.h5' )
+
+
+
+
 #1. 데이터
 dataset = load_boston()
 x = dataset.data
@@ -32,14 +41,6 @@ x_test = scaler.transform(x_test)
 print(x)
 
 
-# #2. 모델구성 (순차형)
-# model = Sequential()
-# model.add(Dense(10,input_dim=13))
-# model.add(Dense(30, activation='relu'))
-# model.add(Dense(60, activation='relu'))
-# model.add(Dense(50, activation='relu'))
-# model.add(Dense(70, activation='relu'))
-# model.add(Dense(1))
 
 #2. 모델구성(함수형)
 input1 = Input(shape=(13,))
@@ -51,11 +52,39 @@ output1 = Dense(1)(dense4)
 model = Model(inputs=input1, outputs=output1)
 model.summary()
 
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam',
               metrics=['mae'])
-model.fit(x_train, y_train, epochs=100, batch_size=20,
-          validation_split=0.2,verbose=1)
+
+
+
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+es = earlystopping = EarlyStopping(monitor='val_loss', patience=1, mode='min',
+                              verbose=1, restore_best_weights=True)
+mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
+                      save_best_only=True,
+                      filepath=path + 'MCP/keras30_ModelCheckPoint1.hdf5')
+
+model.fit(x_train, y_train, epochs=1000, batch_size=20,
+          validation_split=0.2,
+          callbacks=[es, mcp],
+          verbose=1)
+
+
+
+
+
+
 
 
 #4. 평가,예측
@@ -82,7 +111,5 @@ r2 = r2_score(y_test, y_predict)
 print("R2 : ", r2)
 
 
-# # mse :  16.1931095123291
-# mae :  2.6015524864196777
-# RMSE :  4.024066301770375
-# R2 :  0.8120395136427374
+
+# R2 :  R2 :  0.724406639046248

@@ -1,4 +1,4 @@
-from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.models import Sequential, Model , load_model
 from tensorflow.keras.layers import Dense, Input
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
@@ -6,6 +6,11 @@ import numpy as np
 
 import sklearn as sk
 from sklearn.datasets import load_boston
+
+path = './_save/'
+# path = '../_save/'
+# path = 'c:/study/_save/'
+
 
 
 
@@ -32,14 +37,6 @@ x_test = scaler.transform(x_test)
 print(x)
 
 
-# #2. 모델구성 (순차형)
-# model = Sequential()
-# model.add(Dense(10,input_dim=13))
-# model.add(Dense(30, activation='relu'))
-# model.add(Dense(60, activation='relu'))
-# model.add(Dense(50, activation='relu'))
-# model.add(Dense(70, activation='relu'))
-# model.add(Dense(1))
 
 #2. 모델구성(함수형)
 input1 = Input(shape=(13,))
@@ -51,11 +48,29 @@ output1 = Dense(1)(dense4)
 model = Model(inputs=input1, outputs=output1)
 model.summary()
 
+
+# model.save_weights(path + 'keras29_5_save_weights1.h5' )
+ 
+# model.load_weights(path + 'keras29_5_save_weights1.h5')
+ 
+ 
+ 
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam',
               metrics=['mae'])
 model.fit(x_train, y_train, epochs=100, batch_size=20,
           validation_split=0.2,verbose=1)
+
+
+model.save_weights(path + 'keras29_5_save_weights2.h5' )
+
+
+
+
+
+
+
+
 
 
 #4. 평가,예측
@@ -82,7 +97,4 @@ r2 = r2_score(y_test, y_predict)
 print("R2 : ", r2)
 
 
-# # mse :  16.1931095123291
-# mae :  2.6015524864196777
-# RMSE :  4.024066301770375
-# R2 :  0.8120395136427374
+
