@@ -66,7 +66,7 @@ model.summary()
 model.compile(loss='categorical_crossentropy', optimizer='adam',
               metrics=['accuracy'])
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-earlyStopping = EarlyStopping(monitor='val_loss' , 
+es = earlyStopping = EarlyStopping(monitor='val_loss' , 
                               mode='min', 
                               patience=20, restore_best_weights=True,
                               verbose=1)
@@ -92,7 +92,7 @@ mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                     filepath= filepath + 'k31_09_' + date + filename)
 model.fit(x_train, y_train, epochs=1000, batch_size=1,
           validation_split=0.2,
-          callbacks=[earlyStopping],
+          callbacks=[earlyStopping,mcp],
           verbose=1)
 
 #4. 평가,예측
