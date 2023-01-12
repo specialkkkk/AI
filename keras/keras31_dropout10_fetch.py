@@ -94,6 +94,7 @@ x_test = scaler.transform(x_test)
 # model = Sequential()
 # model.add(Dense(256, activation='relu', input_shape=(54,)))
 # model.add(Dense(128, activation='relu'))
+# model.add(Dropout(0.5))
 # model.add(Dense(64, activation='relu'))
 # model.add(Dense(32, activation='relu'))
 # model.add(Dense(16, activation='relu'))
@@ -116,11 +117,31 @@ model.summary()
 #3. 컴파일, 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam',
               metrics=['accuracy'])
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 earlyStopping = EarlyStopping(monitor='val_loss' , 
                               mode='min', 
                               patience=20, restore_best_weights=True,
                               verbose=1)
+
+
+import datetime
+date = datetime.datetime.now()
+print(date)    # 2023-01-12 14:58:02.348691
+print(type(date))     # <class 'datetime.datetime'>
+date = date.strftime("%m%d_%H%M")   #0112_1457
+print(date)    # 0112_1502
+print(type(date))
+
+filepath = './_save/MCP/'
+filename = '{epoch:04d}-{val_loss:.4f}.hdf5'   #0037-0.0048.hdf5 
+
+
+
+
+mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
+                      save_best_only=True,
+                    #   filepath= path  + 'MCP/keras30_ModelCheckPoint3.hdf5')        
+                    filepath= filepath + 'k31_10_' + date + filename)
 hist = model.fit(x_train, y_train, epochs=100, batch_size=250,
           validation_split=0.2,
           callbacks=[earlyStopping],

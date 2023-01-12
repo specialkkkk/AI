@@ -52,6 +52,7 @@ test_csv = scaler.transform(test_data)
 # model.add(Dense(5, input_dim = 8))
 # model.add(Dense(50, activation='relu'))
 # model.add(Dense(60, activation='relu'))
+# model.add(Dropout(0.5))
 # model.add(Dense(70, activation='relu'))
 # model.add(Dense(80, activation='relu'))
 # model.add(Dense(70, activation='relu'))
@@ -74,11 +75,30 @@ model.summary()
 
 model.compile(loss='mse', optimizer='adam')
 
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 earlyStopping = EarlyStopping(monitor='val_loss' , 
                               mode='min', 
                               patience=5, restore_best_weights=True,
                               verbose=1)
+
+import datetime
+date = datetime.datetime.now()
+print(date)    # 2023-01-12 14:58:02.348691
+print(type(date))     # <class 'datetime.datetime'>
+date = date.strftime("%m%d_%H%M")   #0112_1457
+print(date)    # 0112_1502
+print(type(date))
+
+filepath = './_save/MCP/'
+filename = '{epoch:04d}-{val_loss:.4f}.hdf5'   #0037-0.0048.hdf5 
+
+
+
+
+mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
+                      save_best_only=True,
+                    #   filepath= path  + 'MCP/keras30_ModelCheckPoint3.hdf5')        
+                    filepath= filepath + 'k31_05_' + date + filename)
 
 hist = model.fit(x_train, y_train, epochs=100, batch_size=32,
           validation_split=0.2, callbacks=[earlyStopping],
