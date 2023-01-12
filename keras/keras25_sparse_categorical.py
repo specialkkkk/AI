@@ -71,7 +71,7 @@ y_predict = np.argmax(y_predict, axis=1)
 print("y_pred(예측값) : ", y_predict)
 
 
-# y_test = np.argmax(y_test, axis=1)
+# y_test = np.argmax(y_test, axis=1)   #원핫안하고 sparse 사용 => 주석처리
 print("y_test(원래값) : ", y_test)
 
 acc = accuracy_score(y_test, y_predict)   

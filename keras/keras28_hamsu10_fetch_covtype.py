@@ -7,11 +7,15 @@ from sklearn.datasets import fetch_covtype
 #1. 데이터
 datasets = fetch_covtype()
 x = datasets.data
-y = datasets.target
+y = datasets['target']
 print(x.shape, y.shape)  # (581012, 54) (581012,)    #데이터 58만개  / 컬럼 54개 = input
 print(np.unique(y, return_counts=True))  #(array([1, 2, 3, 4, 5, 6, 7]), array([211840, 283301,  35754,   2747,   9493,  17367,  20510], dtype=int64)) output= 7
 
-
+from tensorflow.keras.utils import to_categorical
+y = to_categorical(y)
+print(y)
+y = np.delete(y, 0 , axis = 1)
+print(y.shape)
 
 
 
@@ -96,11 +100,11 @@ x_test = scaler.transform(x_test)
 # model.add(Dense(7, activation='softmax'))            
 
 #2. 모델구성(함수형)
-input1 = Input(shape=(13,))
-dense1 = Dense(50, activation='relu')(input1)
-dense2 = Dense(40, activation='relu')(dense1)
-dense3 = Dense(30, activation='relu')(dense2)
-dense4 = Dense(20, activation='relu')(dense3)
+input1 = Input(shape=(54,))
+dense1 = Dense(256, activation='relu')(input1)
+dense2 = Dense(128, activation='relu')(dense1)
+dense3 = Dense(64, activation='relu')(dense2)
+dense4 = Dense(32, activation='relu')(dense3)
 output1 = Dense(7, activation='softmax')(dense4)
 model = Model(inputs=input1, outputs=output1)
 model.summary()
@@ -110,14 +114,14 @@ model.summary()
 
 
 #3. 컴파일, 훈련
-model.compile(loss='sparse_categorical_crossentropy', optimizer='adam',
+model.compile(loss='categorical_crossentropy', optimizer='adam',
               metrics=['accuracy'])
 from tensorflow.keras.callbacks import EarlyStopping
 earlyStopping = EarlyStopping(monitor='val_loss' , 
                               mode='min', 
                               patience=20, restore_best_weights=True,
                               verbose=1)
-model.fit(x_train, y_train, epochs=100, batch_size=250,
+hist = model.fit(x_train, y_train, epochs=100, batch_size=250,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
@@ -135,7 +139,7 @@ import numpy as np
 y_predict = model.predict(x_test)
 y_predict = np.argmax(y_predict, axis=1)
 print("y_pred(예측값) : ", y_predict)
-# y_test = np.argmax(y_test, axis=1)
+y_test = np.argmax(y_test, axis=1)
 print("y_test(원래값) : ", y_test)
 
 acc = accuracy_score(y_test, y_predict)   
@@ -146,4 +150,3 @@ print(acc)
 
 # accuracy :  0.860287606716156
 # accuracy :  0.9325060248374939  레이어 2의 배수 역삼각형
-# sparse_categorical_crossentropy쓰고 원핫 안함 acc = ?
