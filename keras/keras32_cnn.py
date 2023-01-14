@@ -11,6 +11,4 @@ model.add(Dense(1))   # (N, 1)
 
 model.summary()
 
-
-
-
+#
