@@ -171,3 +171,14 @@ print(acc)
 
 # accuracy :  0.860287606716156
 # accuracy :  0.9325060248374939  레이어 2의 배수 역삼각형
+
+
+
+
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, Flatten
+
+   # 아웃풋 = (N, 4, 4, 10)    행무시=None
+
+model.add(Flatten())   # 펴주기   #(N, 45) 열=컬럼=특성=45개
