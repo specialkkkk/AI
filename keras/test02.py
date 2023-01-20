@@ -22,10 +22,11 @@ model.add(Conv2D(128, (3,3)))
 model.add(Conv2D(64, (3,3)))
 model.add(Conv2D(32, (3,3)))
 model.add(Flatten())
-model.add(Dense(800, activation='relu'))
+model.add(Dense(1000, activation='relu'))
+model.add(Dense(900, activation='relu'))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(256, activation='linear'))
-model.add(Dense(128, activation='relu'))
+model.add(Dense(200, activation='relu'))
 model.add(Dense(100, activation='softmax'))                                     # array가 0부터 99까지이니 100개겠지?
 
 #3. 컴파일, 훈련    
@@ -33,7 +34,7 @@ model.compile(loss='sparse_categorical_crossentropy', optimizer='adam',
               metrics=['acc'])
 
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-es = EarlyStopping(monitor='val_loss', patience=20, mode='min', 
+es = EarlyStopping(monitor='val_loss', patience=50, mode='min', 
                             #   restore_best_weights=False,
                               verbose=1)
 
@@ -57,8 +58,8 @@ mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                       filepath = filepath + 'k34_03' + date + '_' + filename
 )
                                                                                        
-model.fit(x_train, y_train, epochs=100, batch_size=32,
-          validation_split=0.2,
+model.fit(x_train, y_train, epochs=200, batch_size=32,
+          validation_split=0.25,
           callbacks=[es, mcp],
           verbose=1)                                                    # val_loss 즉, 검증할 때 손실값이 출력된다.
                                                                         # 기준을 잡을 때, val_loss로 기준을 잡는다.
@@ -71,4 +72,6 @@ print('loss:', results[0])                                                     #
 print('acc:', results[1])                                                      # acc 값 반환
 
 # es, mcp 적용 / val 적용
+
+
 
