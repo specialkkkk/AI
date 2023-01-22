@@ -22,12 +22,12 @@ model.add(Conv2D(128, (3,3)))
 model.add(Conv2D(64, (3,3)))
 model.add(Conv2D(32, (3,3)))
 model.add(Flatten())
+model.add(Dense(1250, activation='relu'))
 model.add(Dense(1000, activation='relu'))
-model.add(Dense(900, activation='relu'))
 model.add(Dense(512, activation='relu'))
 model.add(Dense(256, activation='linear'))
 model.add(Dense(200, activation='relu'))
-model.add(Dense(100, activation='softmax'))                                     # array가 0부터 99까지이니 100개겠지?
+model.add(Dense(100, activation='softmax'))                                     # array가 0부터 99까지이니 100개
 
 #3. 컴파일, 훈련    
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam',
@@ -58,7 +58,7 @@ mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                       filepath = filepath + 'k34_03' + date + '_' + filename
 )
                                                                                        
-model.fit(x_train, y_train, epochs=200, batch_size=32,
+model.fit(x_train, y_train, epochs=1200, batch_size=1025,
           validation_split=0.25,
           callbacks=[es, mcp],
           verbose=1)                                                    # val_loss 즉, 검증할 때 손실값이 출력된다.
