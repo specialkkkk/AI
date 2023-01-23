@@ -23,19 +23,19 @@ path = 'C:/study/keras_save/MCP/'
 #2. 모델
 model = Sequential()
 model.add(Conv2D(filters=64, kernel_size = (2,2), input_shape=(32,32,3), activation='relu'))
-model.add(Conv2D(filters=32, kernel_size=(2,2))) # input_size = (27, 27, 128)
-model.add(Conv2D(filters=16, kernel_size=(2,2))) # input_size = (26, 26, 64)
+model.add(Conv2D(filters=64, kernel_size=(2,2))) # input_size = (27, 27, 128)
+model.add(Conv2D(filters=32, kernel_size=(2,2))) # input_size = (26, 26, 64)
 model.add(Flatten())
 model.add(Dense(units=64, activation='relu'))
-model.add(Dense(units=28, activation='relu'))
+model.add(Dense(units=32, activation='relu'))
 model.add(Dense(units=100, activation='softmax'))
 
 #3. 컴파일 및 훈련
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics='acc') # one-hot encoding 하지 않아도 되는 데이터이므로 loss= sparse_categorical_crossentropy
 
 MCP = ModelCheckpoint(monitor='val_loss', mode = 'auto', save_best_only=True, filepath = path + 'keras34_1_mnist.hdf5') 
-ES = EarlyStopping(monitor = 'val_loss', mode = min, patience=4, restore_best_weights = True) 
-model.fit(x_train, y_train, epochs=64, batch_size=1200, validation_split=0.35, callbacks=[ES, MCP])
+ES = EarlyStopping(monitor = 'val_loss', mode = min, patience=50, restore_best_weights = True) 
+model.fit(x_train, y_train, epochs=350, batch_size=1200, validation_split=0.35, callbacks=[ES, MCP])
 
 #4. 평가 및 예측
 metric = model.evaluate(x_test, y_test) # compile에서 metrics = acc를 지정했으므로 evaluate는 값을 배열 형태로 2개 반환함
