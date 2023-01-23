@@ -21,11 +21,11 @@ model.add(Conv2D(580, (3,3), activation='relu'))
 model.add(Conv2D(250, (3,3), activation='relu'))
 model.add(Conv2D(250, (3,3), activation='relu'))
 model.add(Flatten())
-model.add(Dense(580, activation='relu'))
+model.add(Dense(1580, activation='relu'))
 model.add(Dropout(0.55))
-model.add(Dense(480, activation='relu'))
+model.add(Dense(780, activation='relu'))
 model.add(Dropout(0.35))
-model.add(Dense(180, activation='relu'))
+model.add(Dense(350, activation='relu'))
 model.add(Dense(100, activation='softmax'))  
 
 #3. 컴파일, 훈련
@@ -57,8 +57,8 @@ ModelCheckpoint = ModelCheckpoint(monitor='val_loss',
                                   #filepath=path+'MCP/keras30_ModelCheckPoint3.hdf5'
                                   filepath=filepath+'k34_3_'+date+'_'+filename)
 
-model.fit(x_train, y_train, epochs=2000, batch_size=1080,
-          validation_split=0.25,
+model.fit(x_train, y_train, epochs=3000, batch_size=1080,
+          validation_split=0.2,
           callbacks=[earlyStopping, ModelCheckpoint],
           verbose=1)
 
