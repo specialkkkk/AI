@@ -17,16 +17,16 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten
 #2. 모델
 model = Sequential()
 model.add(Conv2D(filters=512, kernel_size=(3,3), input_shape=(32, 32, 3), activation='relu'))
-model.add(Conv2D(256, (3,3)))
-model.add(Conv2D(128, (3,3)))
-model.add(Conv2D(64, (3,3)))
-model.add(Conv2D(32, (3,3)))
+model.add(Conv2D(200, (3,3)))
+model.add(Conv2D(300, (3,3)))
+model.add(Conv2D(500, (3,3)))
+model.add(Conv2D(700, (3,3)))
 model.add(Flatten())
-model.add(Dense(1250, activation='relu'))
-model.add(Dense(1000, activation='relu'))
-model.add(Dense(512, activation='relu'))
-model.add(Dense(256, activation='linear'))
-model.add(Dense(200, activation='relu'))
+model.add(Dense(1550, activation='relu'))
+model.add(Dense(1200, activation='relu'))
+model.add(Dense(712, activation='relu'))
+model.add(Dense(556, activation='linear'))
+model.add(Dense(300, activation='relu'))
 model.add(Dense(100, activation='softmax'))                                     # array가 0부터 99까지이니 100개
 
 #3. 컴파일, 훈련    
@@ -34,7 +34,7 @@ model.compile(loss='sparse_categorical_crossentropy', optimizer='adam',
               metrics=['acc'])
 
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-es = EarlyStopping(monitor='val_loss', patience=50, mode='min', 
+es = EarlyStopping(monitor='val_loss', patience=200, mode='min', 
                             #   restore_best_weights=False,
                               verbose=1)
 
@@ -58,8 +58,8 @@ mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                       filepath = filepath + 'k34_03' + date + '_' + filename
 )
                                                                                        
-model.fit(x_train, y_train, epochs=1200, batch_size=1025,
-          validation_split=0.25,
+model.fit(x_train, y_train, epochs=2200, batch_size=1025,
+          validation_split=0.2,
           callbacks=[es, mcp],
           verbose=1)                                                    # val_loss 즉, 검증할 때 손실값이 출력된다.
                                                                         # 기준을 잡을 때, val_loss로 기준을 잡는다.
