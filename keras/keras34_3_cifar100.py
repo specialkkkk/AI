@@ -1,3 +1,4 @@
+
 from tensorflow.keras.datasets import cifar10, cifar100
 import numpy as np
 
@@ -14,7 +15,7 @@ print(np.unique(y_train , return_counts=True))  # (array ([0~99]))   # (10,)
 
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Dense, Flatten
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, Dropout
 
 path = './_save/'
 
@@ -24,8 +25,10 @@ model.add(Conv2D(filters=64, kernel_size=(2,2), input_shape=(32, 32, 3), activat
 model.add(Conv2D(filters=128, kernel_size=(2,2),activation='relu'))      # (30,30,64)    
 model.add(Conv2D(filters=256, kernel_size=(2,2),activation='relu'))      # (29,29,64)
 model.add(Flatten())
-model.add(Dense(512, activation='relu'))              
-model.add(Dense(512, activation='relu'))              
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.55))              
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.3))              
 model.add(Dense(100, activation='softmax'))
 
 #3. 컴파일,훈련
@@ -58,8 +61,8 @@ mcp = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                     filepath= filepath + 'k34_03_' + date + filename)
 
 
-model.fit(x_train, y_train, epochs=100, verbose=1, batch_size=250,
-          validation_split=0.2,callbacks=[earlyStopping,mcp])
+model.fit(x_train, y_train, epochs=1000, verbose=1, batch_size=1250,
+          validation_split=0.25,callbacks=[earlyStopping,mcp])
 
 
 model.save(path + "keras34_3_cifar100_save_mode.h5")
@@ -69,3 +72,6 @@ model.save(path + "keras34_3_cifar100_save_mode.h5")
 results = model.evaluate(x_test, y_test)
 print('loss : ', results[0])
 print('acc : ', results[1])
+
+#loss :  4.605201244354248
+# acc :  0.009999999776482582
