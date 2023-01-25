@@ -14,13 +14,15 @@ print(np.unique(y_train , return_counts=True))  # (array ([0~9]))   # (10,)
 
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Dense, Flatten
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, Dropout
 path = './_save/'
 
 #2. 모델
 model = Sequential()
 model.add(Conv2D(filters=128, kernel_size=(2,2), input_shape=(32, 32, 3), activation='relu'))           # (31,31,128)
+model.add(Dropout(0.5))
 model.add(Conv2D(filters=64, kernel_size=(2,2),activation='relu'))      # (30,30,64)    
+model.add(Dropout(0.3))
 model.add(Conv2D(filters=64, kernel_size=(2,2),activation='relu'))      # (29,29,64)    
 model.add(Flatten())
 model.add(Dense(32, activation='relu'))     
@@ -34,7 +36,7 @@ model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 es = earlyStopping = EarlyStopping(monitor='val_loss' , 
                               mode='min', 
-                              patience=5, restore_best_weights=True,
+                              patience=20, restore_best_weights=True,
                               verbose=1)
 
 
