@@ -1,0 +1,1 @@
+# 01~14 까지 Conv1D로 만들기 boston 부터 civar100까지
